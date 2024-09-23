@@ -1,0 +1,8 @@
+{
+  "name": "album-review-backend",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/usr/src/app",
+  "remoteUser": "node",
+  "forwardPorts": [8888]
+}

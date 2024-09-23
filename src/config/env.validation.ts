@@ -1,13 +1,8 @@
-import {
-  IsEnum,
-  IsNumber,
-  IsString,
-  validateSync,
-} from 'class-validator'
+import { IsEnum, IsNumber, IsString, validateSync } from 'class-validator'
 import { Type } from 'class-transformer'
-
 import { plainToInstance } from 'class-transformer'
 
+// 環境変数のenum
 enum Environment {
   Development = 'development',
   Production = 'production',
@@ -33,22 +28,16 @@ export class EnvironmentVariables {
   DB_USER: string
 
   @IsString()
-  DB_PASS: string
+  DB_PASSWORD: string
 
   @IsString()
   DB_NAME: string
 }
 
-export function validate(
-  config: Record<string, unknown>,
-) {
-  const validatedConfig = plainToInstance(
-    EnvironmentVariables,
-    config,
-    {
-      excludeExtraneousValues: true,
-    },
-  )
+export function validate(config: Record<string, unknown>) {
+  const validatedConfig = plainToInstance(EnvironmentVariables, config, {
+    excludeExtraneousValues: true,
+  })
 
   const errors = validateSync(validatedConfig, {
     skipMissingProperties: true,
