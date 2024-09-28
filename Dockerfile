@@ -13,11 +13,14 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci --only=production
 
+# @nestjs/cliをインストール
+RUN npm install -g @nestjs/cli
+
 # ソースコードをコピー
 COPY . .
 
 # プロダクション用にビルド
 RUN npm run build
 
-# 開発モードで起動
-CMD ["npm", "run", "start:dev"]
+# 手動でアプリケーションを開始するためのコマンド
+CMD ["tail", "-f", "/dev/null"]
