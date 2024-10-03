@@ -33,5 +33,6 @@ ssh-add "$SSH_KEY_PATH"
 # SSHキーの権限を設定
 chmod 600 "$SSH_KEY_PATH"
 chmod 644 "${SSH_KEY_PATH}.pub"
+chmod 644 "${SSH_DIR}/known_hosts"
 
 exec "$@"
