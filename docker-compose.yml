@@ -30,6 +30,21 @@ services:
     networks:
       - app-network
 
+  ssh:
+    build: ./ssh
+    #web containerが立ち上がるのと同時に立ち上がるようにする
+    depends_on:
+      - app
+    tty: true
+    # ssh keyをマウント
+    volumes:
+      - type: bind
+        source: ~/.ssh
+        target : /root/.ssh
+    #web containerと通信できるようにする
+    networks:
+      - app-network
+
 volumes:
   postgres_data:
 
