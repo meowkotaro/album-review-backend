@@ -21,7 +21,7 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-      - ssh_keys:/root/.ssh
+      - ssh_keys:/node/.ssh
 
   db:
     image: postgres:13

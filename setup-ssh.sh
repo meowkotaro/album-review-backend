@@ -1,4 +1,9 @@
-SSH_KEY_PATH="/root/.ssh/id_rsa"
+SSH_DIR="/home/node/.ssh"
+SSH_KEY_PATH="${SSH_DIR}/id_rsa"
+
+# SSHディレクトリが存在しない場合は作成
+mkdir -p $SSH_DIR
+chmod 700 $SSH_DIR
 
 # SSHキーが存在しない場合のみ生成
 if [ ! -f "$SSH_KEY_PATH" ]; then
@@ -6,7 +11,7 @@ if [ ! -f "$SSH_KEY_PATH" ]; then
     ssh-keygen -t rsa -b 4096 -C "$GIT_USER_EMAIL" -N "" -f "$SSH_KEY_PATH"
 
     # known_hostsファイルにGitHubを追加
-    ssh-keyscan github.com >> /root/.ssh/known_hosts
+    ssh-keyscan github.com >> ${SSH_DIR}/known_hosts
 
     # GitHubにSSHキーを追加
     echo "Adding SSH key to GitHub..."
@@ -24,5 +29,9 @@ git config --global user.name "$GIT_USER_NAME"
 # SSHエージェントを起動し、キーを追加
 eval $(ssh-agent -s)
 ssh-add "$SSH_KEY_PATH"
+
+# SSHキーの権限を設定
+chmod 600 "$SSH_KEY_PATH"
+chmod 644 "${SSH_KEY_PATH}.pub"
 
 exec "$@"
