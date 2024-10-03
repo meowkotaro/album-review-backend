@@ -26,4 +26,7 @@ RUN chmod +x /usr/local/bin/setup-ssh.sh
 # .sshディレクトリを作成し、権限を設定
 RUN mkdir -p /home/node/.ssh && chown -R node:node /home/node/.ssh && chmod 700 /home/node/.ssh
 
+USER node
+
+# コンテナ起動時にsetup-ssh.shを実行
 CMD ["/bin/bash", "-c", "/usr/local/bin/setup-ssh.sh && tail -f /dev/null"]
